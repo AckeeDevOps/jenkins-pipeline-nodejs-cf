@@ -1,4 +1,3 @@
-
 import groovy.json.*
 
 def call(Map cfg, String branch, String build, scm){
