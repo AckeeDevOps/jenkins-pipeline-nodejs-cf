@@ -17,6 +17,7 @@ def call(body) {
       // start of Checkout stage
       stage('Checkout') {
         pipelineStep = "checkout"
+        echo "Clonning ${config.branch} of ${config.repositoryUrl}"
         if (!fileExists('repo')){ sh(script: 'mkdir -p repo') }
         dir('repo') {
           withCredentials([string(credentialsId: config.gitlabCredentialsId, variable: 'credentials')]) {
