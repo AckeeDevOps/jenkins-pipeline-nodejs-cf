@@ -14,7 +14,7 @@ def call(Map config, String filename) {
             ]
           ],
           volumes: [
-            - "./repo:/usr/src/app/"
+            "./repo:/usr/src/app/"
           ]
         ]
       ]
