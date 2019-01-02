@@ -21,7 +21,7 @@ def call(body) {
         dir('repo') {
           withCredentials([string(credentialsId: config.gitlabCredentialsId, variable: 'credentials')]) {
             checkout([$class: 'GitSCM',
-              branches: [[name: "*/${config.branch}"]],
+              branches: [[name: config.branch]],
               doGenerateSubmoduleConfigurations: false,
               extensions: [[$class: 'CleanCheckout']],
               submoduleCfg: [],
