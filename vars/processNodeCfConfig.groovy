@@ -10,6 +10,9 @@ def call(Map cfg, String branch, String build, scm = null){
   config.gitlabCredentialsId = cfg.gitlabCredentialsId
   config.sshCredentialsId = cfg.sshCredentialsId
 
+  // create dummy image tag
+  config.dockerImageTag = "build-nodejs-cf-${buildNumber}"
+
   // TO-DO:
   //   - validations
 
