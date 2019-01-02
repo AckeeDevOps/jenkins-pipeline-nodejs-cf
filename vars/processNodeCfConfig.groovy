@@ -29,6 +29,7 @@ def call(Map cfg, String branch, String build, scm = null){
     config.secretsInjection = cfg.secretsInjection
   }
 
+  echo config.dump()
 
   return config
 }
