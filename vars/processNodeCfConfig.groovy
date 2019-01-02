@@ -11,7 +11,7 @@ def call(Map cfg, String branch, String build, scm = null){
   config.sshCredentialsId = cfg.sshCredentialsId
 
   // create dummy image tag
-  config.dockerImageTag = "build-nodejs-cf-build${config.buildNumber}-"
+  config.dockerImageTag = "build-nodejs-cf-build${config.buildNumber}-${UUID.randomUUID().toString()}"
 
   // TO-DO:
   //   - validations
