@@ -1,6 +1,6 @@
 import groovy.json.*
 
-def call(Map cfg, String branch, String build, scm){
+def call(Map cfg, String branch, String build, scm = null){
   def config = [:]
 
   // process simple stuff first
@@ -15,7 +15,7 @@ def call(Map cfg, String branch, String build, scm){
 
   if(config.pipelineMode == 'MultibranchPipeline') {
     echo('running in Multibranch pipeline mode')
-    config.repositoryUrl = scm.getUserRemoteConfigs()[0].getUrl()
+    //config.repositoryUrl = scm.getUserRemoteConfigs()[0].getUrl()
     config.branch = branch // get branch from the Jenkins runtime details
     config.envDetails = getNodeBranchConfig(cfg, config.branch)
     config.secretsInjection = config.envDetails.secretsInjection

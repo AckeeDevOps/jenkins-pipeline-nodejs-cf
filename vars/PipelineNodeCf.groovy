@@ -10,7 +10,7 @@ def call(body) {
   node(agent) {
     // set current step for the notification handler
     def pipelineStep = "start"
-    def config = processNodeCfConfig(cfg, env.BRANCH_NAME, env.BUILD_NUMBER, scm)
+    def config = processNodeCfConfig(cfg, env.BRANCH_NAME, env.BUILD_NUMBER)
 
     try {
 
