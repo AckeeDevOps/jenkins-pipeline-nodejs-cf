@@ -45,7 +45,7 @@ def call(body) {
         sh(script: "docker-compose -f ./build.json build")
 
         // copy app to the build directory
-        sh(script: "docker-compose -f ./build.json run main cp -r /usr/src/app /usr/src/app-compiled/")
+        sh(script: "docker-compose -f ./build.json run main cp -R /usr/src/app/. /usr/src/app-compiled/")
       }
       // end of Build stage
 
@@ -66,6 +66,9 @@ def call(body) {
           echo("Skipping injection of credentials")
         }
         // deploy
+        dir('build') {
+
+        }
       }
       // end of Deploy stage
 
