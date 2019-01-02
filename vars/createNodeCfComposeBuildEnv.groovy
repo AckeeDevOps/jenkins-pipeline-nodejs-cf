@@ -14,11 +14,16 @@ def call(Map config, String filename) {
             ]
           ],
           volumes: [
-            "./repo:/usr/src/app/"
+            "./build:/usr/src/app-compiled/"
           ]
         ]
       ]
     ]
+
+    // remove old builds
+    sh(script: 'rm -rf ./build')
+    sh(script: 'mkdir -p ./build')
+
     def manifest = JsonOutput.toJson(template)
     writeFile(file: filename, text: manifest)
   }

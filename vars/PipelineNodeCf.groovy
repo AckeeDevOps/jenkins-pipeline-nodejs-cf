@@ -58,7 +58,7 @@ def call(body) {
         pipelineStep = "deploy"
         // create env file if needed
         if(config.secretsInjection) {
-          createNodeCfSecretsManifest(config, './repo/.env.yaml')
+          createNodeCfSecretsManifest(config, './build/.env.yaml')
         } else {
           echo("Skipping injection of credentials")
         }

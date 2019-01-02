@@ -15,6 +15,7 @@ def call(Map cfg, String branch, String build, scm = null){
 
   // TO-DO:
   //   - validations
+  // support for multibranch
 
   if(config.pipelineMode == 'MultibranchPipeline') {
     echo('running in Multibranch pipeline mode')
