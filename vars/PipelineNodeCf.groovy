@@ -26,7 +26,7 @@ def call(body) {
               doGenerateSubmoduleConfigurations: false,
               extensions: [[$class: 'CleanCheckout']],
               submoduleCfg: [],
-              userRemoteConfigs: [[credentialsId: credentials, url: config.repositoryUrl]]
+              userRemoteConfigs: [[credentialsId: credentials, url: config.envDetails.repositoryUrl]]
             ])
           }
         }
