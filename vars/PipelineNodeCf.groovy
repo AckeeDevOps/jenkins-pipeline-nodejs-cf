@@ -43,6 +43,9 @@ def call(body) {
         pipelineStep = "build"
         createNodeCfComposeBuildEnv(config, './build.json') // create docker-compose file
         sh(script: "docker-compose -f ./build.json build")
+
+        // copy app to the build directory
+        sh(script: "docker-compose -f ./build.json run main cp -r /usr/src/app/* /usr/src/app-compiled/")
       }
       // end of Build stage
 
