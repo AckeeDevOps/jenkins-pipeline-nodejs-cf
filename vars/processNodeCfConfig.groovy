@@ -28,6 +28,9 @@ def call(Map cfg, String branch, String build, scm = null){
     config.branch = cfg.branch // get branch from Jenkinsfile
     config.secretsInjection = cfg.secretsInjection
   }
+
+
+  return config
 }
 
 def getNodeBranchConfig(Map cfg, branch) {
