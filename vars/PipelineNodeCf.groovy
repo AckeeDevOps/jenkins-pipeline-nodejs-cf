@@ -53,6 +53,7 @@ def call(body) {
       stage('Test') {
         pipelineStep = "test"
         // TBD
+        echo("No tests so far :)")
       }
       // end of Test stage
 
