@@ -45,7 +45,10 @@ def call(Map config, String filename) {
       def outputDataJson = JsonOutput.toJson(outputData)
       writeFile(file: "./secrets.json", text: outputDataJson)
 
-      template.services.main.volumes.push();
+      // add firebase token to the environment
+      template.services.main.volumes.push(
+        "${config.workspace}/secrets.json:/usr/src/app/"
+      );
     }
 
     def manifest = JsonOutput.toJson(template)
