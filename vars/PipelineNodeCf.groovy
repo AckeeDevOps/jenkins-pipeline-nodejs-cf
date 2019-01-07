@@ -74,6 +74,10 @@ def call(body) {
          sh(script: 'docker-compose -f build.json rm -s -f')
        }
 
+       if(!config.debugMode) {
+         sh(script: 'rm -rf ./build.json')
+         sh(script: 'rm -rf ./deploy.json')
+       }
      }
   }
 
