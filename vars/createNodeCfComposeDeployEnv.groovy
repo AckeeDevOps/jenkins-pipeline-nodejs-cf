@@ -1,7 +1,7 @@
 import groovy.json.*
 
 def call(Map config, String filename) {
-  withCredentials([string(credentialsId: config.sshCredentialsId, variable: 'KEY')]) {
+  withCredentials([string(credentialsId: config.firebaseCredentialsId, variable: 'KEY')]) {
     template = [
       version: '3.1',
       services: [
@@ -10,7 +10,10 @@ def call(Map config, String filename) {
           build: [
             context: './repo',
           ],
-          volumes: []
+          volumes: [],
+          environment: [
+            'FIREBASE_TOKEN': env.KEY 
+          ]
         ]
       ]
     ]
@@ -39,6 +42,10 @@ def call(Map config, String filename) {
           }
         }
       }
+      def outputDataJson = JsonOutput.toJson(outputData)
+      writeFile(file: "./secrets.json", text: outputDataJson)
+
+      template.services.main.volumes.push();
     }
 
     def manifest = JsonOutput.toJson(template)
