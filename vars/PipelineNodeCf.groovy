@@ -43,16 +43,12 @@ def call(body) {
         pipelineStep = "build"
         createNodeCfComposeBuildEnv(config, './build.json') // create docker-compose file
         sh(script: "docker-compose -f ./build.json build")
-
-        // copy app to the build directory
-        sh(script: "docker-compose -f ./build.json run main cp -R /usr/src/app/. /usr/src/app-compiled/")
       }
       // end of Build stage
 
       // start of Test stage
       stage('Test') {
         pipelineStep = "test"
-        // TBD
         echo("No tests so far :)")
       }
       // end of Test stage
@@ -60,16 +56,9 @@ def call(body) {
       // start of Deploy stage
       stage('Deploy') {
         pipelineStep = "deploy"
-        // create env file if needed
-        if(config.secretsInjection) {
-          createNodeCfSecretsManifest(config, './build/.env.yaml')
-        } else {
-          echo("Skipping injection of credentials")
-        }
-        // deploy
-        dir('build') {
-
-        }
+        // prepare docker-compose file
+        createNodeCfComposeDeployEnv(config, './deploy.json')
+        // do stuff in the Firebase container
       }
       // end of Deploy stage
 
@@ -84,6 +73,7 @@ def call(body) {
        if(fileExists('build.json')) {
          sh(script: 'docker-compose -f build.json rm -s -f')
        }
+
      }
   }
 
