@@ -16,7 +16,6 @@ def call(Map cfg, String branch, String build, scm = null){
   config.dockerImageTag = "build-nodejs-cf-build${config.buildNumber}-${UUID.randomUUID().toString()}"
 
   // TO-DO:
-  //   - validations
   // support for multibranch
 
   if(config.pipelineMode == 'MultibranchPipeline') {
@@ -35,7 +34,7 @@ def call(Map cfg, String branch, String build, scm = null){
     config.secretsInjection = cfg.secretsInjection
   }
 
-  echo config.dump()
+  
 
   return config
 }

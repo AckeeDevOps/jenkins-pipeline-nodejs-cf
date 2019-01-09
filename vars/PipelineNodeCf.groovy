@@ -56,9 +56,11 @@ def call(body) {
       // start of Deploy stage
       stage('Deploy') {
         pipelineStep = "deploy"
-        // prepare docker-compose file
+        // prepare docker-compose file (and secrets)
         createNodeCfComposeDeployEnv(config, './deploy.json')
         // do stuff in the Firebase container
+        sh(script: "docker-compose -f deploy.json up --no-start")
+        sh(script: "docker-compose -f deploy.json run main firebase deploy --project=${config.envDetails.gcpProjectId}")
       }
       // end of Deploy stage
 
@@ -69,10 +71,9 @@ def call(body) {
        println(err.getStackTrace());
        throw err
      } finally {
-       // remove build containers
-       if(fileExists('build.json')) {
-         sh(script: 'docker-compose -f build.json rm -s -f')
-       }
+       // remove build and deploy containers
+       if(fileExists('build.json')) { sh(script: 'docker-compose -f build.json rm -s -f') }
+       if(fileExists('deploy.json')) { sh(script: 'docker-compose -f deploy.json rm -s -f') }
 
        if(!config.debugMode) {
          sh(script: 'rm -rf ./build.json')
