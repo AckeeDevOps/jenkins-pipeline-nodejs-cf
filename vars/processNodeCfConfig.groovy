@@ -34,7 +34,8 @@ def call(Map cfg, String branch, String build, scm = null){
     config.secretsInjection = cfg.secretsInjection
   }
 
-  
+  validateEnvDetailsString('gcpProjectId', config)
+  validateEnvDetailsString('gcpProjectId', repositoryUrl)
 
   return config
 }
@@ -45,5 +46,11 @@ def getNodeBranchConfig(Map cfg, branch) {
     return branchConfig
   } else {
     error(message: "Branch '${branch}' does not exist in the 'branchEnvs' Map.")
+  }
+}
+
+def validateEnvDetailsString(String input, Map config) {
+  if(!config.envDetails."${input}" || config.envDetails."${input}" == "") {
+    error(message: "${input} has to be always set!")
   }
 }
