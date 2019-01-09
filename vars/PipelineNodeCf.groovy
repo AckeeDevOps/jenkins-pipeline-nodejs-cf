@@ -53,6 +53,13 @@ def call(body) {
       }
       // end of Test stage
 
+      // start of Lint stage
+      stage('Lint') {
+        pipelineStep = "test"
+        echo("No linting so far :)")
+      }
+      // end of Lint stage
+
       // start of Deploy stage
       stage('Deploy') {
         pipelineStep = "deploy"
