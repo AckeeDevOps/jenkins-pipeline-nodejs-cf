@@ -55,7 +55,7 @@ def call(Map config, String filename) {
 
     // mount secrets to the docker container
     template.services.main.volumes.push(
-      "${config.workspace}/secrets.json:/usr/src/app/"
+      "${config.workspace}/secrets.json:/usr/src/app/secrets.json"
     );
 
     // create file with secrets
