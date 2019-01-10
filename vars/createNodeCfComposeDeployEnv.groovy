@@ -60,7 +60,7 @@ def call(Map config, String filename) {
 
     // create file with secrets
     def outputDataJson = JsonOutput.toJson(outputData)
-    def outputPrettyJson JsonOutput.prettyPrint(outputDataJson)
+    def outputPrettyJson = JsonOutput.prettyPrint(outputDataJson)
     writeFile(file: "./secrets.json", text: outputPrettyJson)
 
     // create docker compose manifest
