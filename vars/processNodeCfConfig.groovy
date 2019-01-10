@@ -35,7 +35,7 @@ def call(Map cfg, String branch, String build, scm = null){
   }
 
   validateEnvDetailsString('gcpProjectId', config)
-  validateEnvDetailsString('gcpProjectId', repositoryUrl)
+  validateEnvDetailsString('repositoryUrl', config)
 
   return config
 }
