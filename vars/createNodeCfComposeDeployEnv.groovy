@@ -18,19 +18,28 @@ def call(Map config, String filename) {
       ]
     ]
 
+    // create object with projectId
+    def outputData = [
+      "FIRESTORE_PROJECT": config.envDetails.gcpProjectId
+    ]
+
+    // insert specified secrets if needed
     if(config.secretsInjection) {
+      
+      // prepare structure for obtainNodeVaultSecrets
       def secrets = []
       for(c in config.secretsInjection.secrets){
         secrets.push([path: c.vaultSecretPath, keyMap: c.keyMap])
       }
 
-      def secretData = obtainNodeVaultSecrets(
+      // get secrets from Valut
+      def secretData = obtainNodeCfVaultSecrets(
         config.secretsInjection.vaultUrl,
         secrets,
         config.secretsInjection.jenkinsCredentialsId
       )
 
-      def outputData = [:]
+      // push secrets to the flat object
       for(c in config.secretsInjection.secrets){
         for(k in c.keyMap) {
           // select data from the obtained Map according to configuration
@@ -42,15 +51,18 @@ def call(Map config, String filename) {
           }
         }
       }
-      def outputDataJson = JsonOutput.toJson(outputData)
-      writeFile(file: "./secrets.json", text: outputDataJson)
-
-      // add firebase token to the environment
-      template.services.main.volumes.push(
-        "${config.workspace}/secrets.json:/usr/src/app/"
-      );
     }
 
+    // mount secrets to the docker container
+    template.services.main.volumes.push(
+      "${config.workspace}/secrets.json:/usr/src/app/"
+    );
+
+    // create file with secrets
+    def outputDataJson = JsonOutput.toJson(outputData)
+    writeFile(file: "./secrets.json", text: outputDataJson)
+
+    // create docker compose manifest
     def manifest = JsonOutput.toJson(template)
     writeFile(file: filename, text: manifest)
   }
