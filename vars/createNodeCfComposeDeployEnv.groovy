@@ -55,12 +55,13 @@ def call(Map config, String filename) {
 
     // mount secrets to the docker container
     template.services.main.volumes.push(
-      "${config.workspace}/secrets.json:/usr/src/app/dist/import/secrets.json"
+      "${config.workspace}/secrets.json:/usr/src/app/secrets.json"
     );
 
     // create file with secrets
     def outputDataJson = JsonOutput.toJson(outputData)
-    writeFile(file: "./secrets.json", text: outputDataJson)
+    def outputPrettyJson JsonOutput.prettyPrint(outputDataJson)
+    writeFile(file: "./secrets.json", text: outputPrettyJson)
 
     // create docker compose manifest
     def manifest = JsonOutput.toJson(template)
