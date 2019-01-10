@@ -45,7 +45,7 @@ def call(Map config, String filename) {
           // select data from the obtained Map according to configuration
           if(secretData."${k.local}"){
             def dataPlain = secretData."${k.local}"
-            outputData.put(k.local, kubernetesData)
+            outputData.put(k.local, dataPlain)
           } else {
             error "${k.vault} @ ${c.vaultSecretPath} seems to be non-existent!"
           }
