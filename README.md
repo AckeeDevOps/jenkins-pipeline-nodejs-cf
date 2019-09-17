@@ -14,7 +14,6 @@ PipelineNodeCf{
   repositoryUrl = 'git@git-server.co.uk/repo'
   branch = 'master'
   gcpProjectId = 'my-project-12345'
-  secretsInjection = [:]
 }
 ```
 
@@ -29,7 +28,6 @@ PipelineNodeCf{
   branchEnvs = [
     master: [
       gcpProjectId: 'my-project-12345',
-      secretsInjection: [:]
     ]
   ]
 }
@@ -48,4 +46,3 @@ PipelineNodeCf{
 
 **Top-level for Simple pipeline mode, nested for MultibranchPipeline mode**
 - `gcpProjectId` e.g. *my-project-12345*
-- `secretsInjection`

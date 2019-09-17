@@ -13,7 +13,6 @@ def call(body) {
     def config = processNodeCfConfig(cfg, env.BRANCH_NAME, env.BUILD_NUMBER)
 
     try {
-
       // start of Checkout stage
       stage('Checkout') {
         pipelineStep = "checkout"
@@ -63,6 +62,8 @@ def call(body) {
       // start of Deploy stage
       stage('Deploy') {
         pipelineStep = "deploy"
+        // if specified, obtain secrets
+        createNodeSecretsManifest(config)
         // prepare docker-compose file (and secrets)
         createNodeCfComposeDeployEnv(config, './deploy.json')
         // do stuff in the Firebase container
@@ -85,6 +86,11 @@ def call(body) {
        if(!config.debugMode) {
          sh(script: 'rm -rf ./build.json')
          sh(script: 'rm -rf ./deploy.json')
+         sh(script: 'rm -rf ./secrets')
+         sh(script: 'rm -rf ./secrets.json')
+         sh(script: 'rm -rf ./values.json')
+         sh(script: 'rm -rf ./secrets-test.json')
+         sh(script: 'rm -rf ./secrets-deployment.json')
        }
      }
   }

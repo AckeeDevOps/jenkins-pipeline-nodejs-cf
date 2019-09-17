@@ -22,7 +22,10 @@ def call(Map cfg, String branch, String build, scm = null){
     echo('running in Multibranch pipeline mode')
     //config.repositoryUrl = scm.getUserRemoteConfigs()[0].getUrl()
     config.branch = branch // get branch from the Jenkins runtime details
-    config.envDetails = getNodeBranchConfig(cfg, config.branch)
+    // get default configuration for all branches
+    config.envDefaults = cfg.envDefaults ? cfg.envDefaults : [:]
+    // merge defaults with the actual values, actual values have always precedence
+    config.envDetails = config.envDefaults + getNodeBranchConfig(cfg, config.branch)
     config.secretsInjection = config.envDetails.secretsInjection
   } else {
     echo('running in Simple pipeline mode')
