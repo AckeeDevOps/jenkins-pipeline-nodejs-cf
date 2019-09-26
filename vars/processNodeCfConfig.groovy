@@ -9,7 +9,7 @@ def call(Map cfg, String branch, String build, scm = null){
   config.pipelineMode = cfg.pipelineMode
   config.gitlabCredentialsId = cfg.gitlabCredentialsId
   config.sshCredentialsId = cfg.sshCredentialsId
-  config.firebaseCredentialsId = cfg.firebaseCredentialsId // required
+  config.firebaseSACredentials = cfg.firebaseSACredentials // required
   config.debugMode = cfg.debugMode
 
   // create dummy image tag

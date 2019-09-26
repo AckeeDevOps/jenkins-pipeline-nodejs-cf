@@ -1,7 +1,7 @@
 import groovy.json.*
 
 def call(Map config, String filename) {
-  withCredentials([string(credentialsId: config.firebaseCredentialsId, variable: 'KEY')]) {
+  withCredentials([file(credentialsId: config.firebaseSACredentials, variable: 'CREDENTIALS')]) {
     template = [
       version: '3.1',
       services: [
@@ -10,10 +10,10 @@ def call(Map config, String filename) {
           build: [
             context: './repo',
           ],
-          volumes: [],
           environment: [
-            'FIREBASE_TOKEN': env.KEY 
-          ]
+            'GOOGLE_APPLICATION_CREDENTIALS': readFile(CREDENTIALS)
+          ],
+          volumes: []
         ]
       ]
     ]
