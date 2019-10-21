@@ -68,7 +68,8 @@ def call(body) {
         createNodeCfComposeDeployEnv(config, './deploy.json')
         // do stuff in the Firebase container
         sh(script: "docker-compose -f deploy.json up --no-start")
-        sh(script: "docker-compose -f deploy.json run main firebase deploy --project=${config.envDetails.gcpProjectId}")
+        sh(script: "docker-compose -f deploy.json run main sleep 600")
+        //sh(script: "docker-compose -f deploy.json run main firebase deploy --project=${config.envDetails.gcpProjectId}")
       }
       // end of Deploy stage
 
