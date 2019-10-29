@@ -18,9 +18,13 @@ def call(Map config, String filename) {
       ]
     ]
 
+    def credentials = readJSON(file: "${config.workspace}/secrets-deployment.json")
+    def runtimeConfig = new JsonSlurper().parseText(JsonOutput.toJson(config.runtimeConfig)) + credentials
+    writeFile(file: "${config.workspace}/runtime.config.json", text: JsonOutput.toJson(runtimeConfig))
+
     // mount secrets to the docker container
     template.services.main.volumes.push(
-      "${config.workspace}/secrets-deployment.json:/usr/src/app/functions/credentials.json"
+      "${config.workspace}/runtime.config.json:/usr/src/app/runtime.config.json"
     );
 
     // create docker compose manifest

@@ -11,6 +11,7 @@ def call(Map cfg, String branch, String build, scm = null){
   config.sshCredentialsId = cfg.sshCredentialsId
   config.firebaseSACredentials = cfg.firebaseSACredentials // required
   config.debugMode = cfg.debugMode
+  config.runtimeConfig = cfg.runtimeConfig ? cfg.runtimeConfig : [:]
 
   // create dummy image tag
   config.dockerImageTag = "build-nodejs-cf-build${config.buildNumber}-${UUID.randomUUID().toString()}"

@@ -14,6 +14,7 @@ PipelineNodeCf{
   repositoryUrl = 'git@git-server.co.uk/repo'
   branch = 'master'
   gcpProjectId = 'my-project-12345'
+  runtimeConfig = []
 }
 ```
 
@@ -24,6 +25,7 @@ PipelineNodeCf{
   pipelineMode = 'MultibranchPipeline'
   gitlabCredentialsId = 'gitlab01-credentials'
   sshCredentialsId = 'ssh-private-key-01'
+  runtimeConfig = []
 
   branchEnvs = [
     master: [
