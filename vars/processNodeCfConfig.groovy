@@ -33,6 +33,7 @@ def call(Map cfg, String branch, String build, scm = null){
     config.envDetails = config.envDefaults
     config.envDetails.repositoryUrl = cfg.repositoryUrl
     config.envDetails.gcpProjectId = cfg.gcpProjectId
+    config.envDetails.friendlyEnvName = cfg.friendlyEnvName
     config.branch = cfg.branch // get branch from Jenkinsfile
     config.secretsInjection = cfg.secretsInjection
   }
