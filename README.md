@@ -11,6 +11,7 @@ PipelineNodeCf{
   pipelineMode = 'Pipeline'
   gitlabCredentialsId = 'gitlab01-credentials'
   sshCredentialsId = 'ssh-private-key-01'
+  firebaseSACredentialsId = 'cloudfunctions-deploy-service-account'
   repositoryUrl = 'git@git-server.co.uk/repo'
   branch = 'master'
   gcpProjectId = 'my-project-12345'
@@ -25,6 +26,7 @@ PipelineNodeCf{
   pipelineMode = 'MultibranchPipeline'
   gitlabCredentialsId = 'gitlab01-credentials'
   sshCredentialsId = 'ssh-private-key-01'
+  firebaseSACredentialsId = 'cloudfunctions-deploy-service-account'
   runtimeConfig = []
 
   branchEnvs = [
@@ -41,6 +43,7 @@ PipelineNodeCf{
 - `pipelineMode` *Pipeline* or *MultibranchPipeline*
 - `gitlabCredentialsId` e.g. *gitlab01-credentials*
 - `sshCredentialsId` e.g. *ssh-private-key-01*
+- `firebaseSACredentialsId` e.g. *cloudfunctions-deploy-service-account*
 
 **Only for Simple pipeline mode; always top-level**
 - `repositoryUrl` e.g. *git@git-server.co.uk/repo*
