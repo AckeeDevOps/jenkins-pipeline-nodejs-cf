@@ -9,8 +9,10 @@ def call(Map cfg, String branch, String build, scm = null){
   config.pipelineMode = cfg.pipelineMode
   config.gitlabCredentialsId = cfg.gitlabCredentialsId
   config.sshCredentialsId = cfg.sshCredentialsId
-  config.firebaseCredentialsId = cfg.firebaseCredentialsId // required
+  config.firebaseSACredentialsId = cfg.firebaseSACredentialsId // required
   config.debugMode = cfg.debugMode
+  config.runtimeConfig = cfg.runtimeConfig ? cfg.runtimeConfig : [:]
+  config.envDefaults = cfg.envDefaults ? cfg.envDefaults : [:]
 
   // create dummy image tag
   config.dockerImageTag = "build-nodejs-cf-build${config.buildNumber}-${UUID.randomUUID().toString()}"
@@ -22,14 +24,16 @@ def call(Map cfg, String branch, String build, scm = null){
     echo('running in Multibranch pipeline mode')
     //config.repositoryUrl = scm.getUserRemoteConfigs()[0].getUrl()
     config.branch = branch // get branch from the Jenkins runtime details
-    config.envDetails = getNodeBranchConfig(cfg, config.branch)
+    // merge defaults with the actual values, actual values have always precedence
+    config.envDetails = config.envDefaults + getNodeBranchConfig(cfg, config.branch)
     config.secretsInjection = config.envDetails.secretsInjection
   } else {
     echo('running in Simple pipeline mode')
     // convert top-level configuration to universal envDetails format
-    config.envDetails = [:]
+    config.envDetails = config.envDefaults
     config.envDetails.repositoryUrl = cfg.repositoryUrl
     config.envDetails.gcpProjectId = cfg.gcpProjectId
+    config.envDetails.friendlyEnvName = cfg.friendlyEnvName
     config.branch = cfg.branch // get branch from Jenkinsfile
     config.secretsInjection = cfg.secretsInjection
   }
