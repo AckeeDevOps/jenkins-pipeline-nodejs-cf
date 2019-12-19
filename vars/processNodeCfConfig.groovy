@@ -13,6 +13,7 @@ def call(Map cfg, String branch, String build, scm = null){
   config.debugMode = cfg.debugMode
   config.runtimeConfig = cfg.runtimeConfig ? cfg.runtimeConfig : [:]
   config.envDefaults = cfg.envDefaults ? cfg.envDefaults : [:]
+  config.envDefaults.deployCmd = config.envDefaults.deployCmd ? config.envDefaults.deployCmd : "deploy"
 
   // create dummy image tag
   config.dockerImageTag = "build-nodejs-cf-build${config.buildNumber}-${UUID.randomUUID().toString()}"
